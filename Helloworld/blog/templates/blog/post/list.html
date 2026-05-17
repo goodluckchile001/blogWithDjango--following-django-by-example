@@ -1,0 +1,31 @@
+{% extends "blog/base.html" %} 
+{%load blog_tags %}
+{% block title %}Blog{% endblock %} 
+
+
+{% block content %}
+  {# Move this above the loop so it only shows once at the top of the page #}
+  {% if tag %}
+    <h2 class="tag-header">Posts tagged with "{{ tag.name }}"</h2>
+  {% endif %}
+
+  {% for post in posts %}
+    <div class="post-card">
+      <h2>
+        <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+      </h2>
+      
+      <p class="tags"> 
+        Tags: 
+        {% for tag in post.tags.all %}
+          <a href="{% url 'blog:post_list_by_tag' tag.slug %}">{{ tag.name }}</a>
+        {% endfor %} {# Close the tag loop here #}
+      </p>
+
+      <p class="date">Published {{ post.publish }} by {{ post.author }}</p>
+      {{ post.body|markdown|truncatewords_html:30 }}
+    </div>
+  {% endfor %} 
+
+  {% include "pagination.html" with page=page_obj %}
+{% endblock %}

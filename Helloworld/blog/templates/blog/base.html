@@ -1,0 +1,73 @@
+{% load static %}
+{% load blog_tags %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}{% endblock %}</title>
+    <!-- Fixed font link -->
+    <link href="https://googleapis.com" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'blog/css/blog.css' %}" />
+    <script src="{% static 'blog/js/blog.js' %}" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="brand">
+          <h1><a href="/">Blogging Site</a></h1>
+          <p class="tagline">A clean, modern blog experience.</p>
+          <p class="tagline">A total of {% total_post %} blog written</p>
+        </div>
+
+        <div class="header-controls">
+          <div class="theme-switch-wrapper">
+            <label class="theme-switch" for="theme-checkbox">
+              <input type="checkbox" id="theme-checkbox" aria-label="Toggle dark mode" />
+              <div class="slider">
+                <svg class="icon sun" xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <svg class="icon moon" xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-layout">
+      <div id="content">
+        {% block content %}{% endblock %}
+      </div>
+      
+      <aside id="sidebar">
+        <!-- Moved sections to sidebar -->
+        <div class="sidebar-section">
+            <h3>Latest Posts</h3>
+            {% show_latest_posts 3 %} 
+        </div>
+
+        <div class="sidebar-section">
+            <h3>Most Commented</h3>
+            {% most_commented_posts 3 as most_commented %}
+            <ul>
+              {% for post in most_commented %}
+                <li>
+                  <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                </li>
+              {% empty %}
+                <li>No comments yet.</li>
+              {% endfor %}
+            </ul>
+        </div>
+        
+        {% block sidebar %}{% endblock %}
+      </aside>
+    </main>
+
+    {% block scripts %}{% endblock %}
+  </body>
+</html>
