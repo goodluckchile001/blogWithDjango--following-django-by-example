@@ -1,0 +1,25 @@
+# created by virtualenv automatically
+*
+# Python Virtual Environments (keeps your repository light)
+.venv/
+venv/
+env/
+Lib/
+Scripts/
+pyvenv.cfg
+
+# Code Editor and IDE Configurations
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+
+# Python cache files (speeds up runtime, unneeded on GitHub)
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Operating System files
+Thumbs.db
+.DS_Store
