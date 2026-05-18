@@ -23,4 +23,7 @@ __pycache__/
 # Operating System files
 Thumbs.db
 .DS_Store
+# removing .env and Todo.md and db.sqlite3 from git tracking
 Helloworld\.env
+Helloworld\TODO.md
+Helloworld\db.sqlite3
