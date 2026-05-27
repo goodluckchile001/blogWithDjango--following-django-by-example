@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.sitemaps',
+    'django.contrib.postgres',
     'taggit',
     'blog.apps.BlogConfig',
 
@@ -92,8 +93,13 @@ DATABASES = {
         'PASSWORD': config('DB_PASSWORD'),
         'HOST': config('DB_HOST'),
         'PORT': config('DB_PORT'),
+
+        'CONN_MAX_AGE': 0, 
+
+
         'OPTIONS': {
             'sslmode': 'require',
+            'target_session_attrs': 'read-write', 
         },
     }
 }
