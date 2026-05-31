@@ -732,3 +732,6 @@ body.dark-mode .tagline {
   color: #cbd5e1 !important;
   opacity: 1 !important; /* Ensures it's not faded out */
 }
+body {
+    font-family: 'Inter', sans-serif;
+}

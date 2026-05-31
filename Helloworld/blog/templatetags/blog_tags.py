@@ -3,6 +3,7 @@ from ..models import Post
 from django.db.models import Count
 import markdown
 from django.utils.safestring import mark_safe
+from ..forms import Searchforms
 
 
 register = template.Library()
@@ -24,3 +25,8 @@ def most_commented_posts(count=5):
 @register.filter(name="markdown")
 def markdown_format(text):
     return mark_safe(markdown.markdown(text))
+
+@register.inclusion_tag("blog/post/search_bar.html")
+def render_search_bar():
+    form = Searchforms()
+    return {'form': form}

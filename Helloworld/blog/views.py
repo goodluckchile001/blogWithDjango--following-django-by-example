@@ -23,12 +23,13 @@ class PostSearchView(View):
                 search_vector=SearchVector('title', weight='A') + SearchVector('body', weight='B')
                 search_query = SearchQuery(query)
                 results = Post.published.annotate(
-                   search_vector=search_vector,
-                   search_query=search_query,
-                   similarity=TrigramSimilarity('title',query),
-                    rank=SearchRank(search_vector,search_query),
-                ).filter(Q(search_vector=search_query)|Q(similarity__gt=0.1)).order_by("-rank",'-similarity')
-                
+                search=search_vector,
+                rank=SearchRank(search_vector, search_query),
+                similarity=TrigramSimilarity("title", query),
+                ).filter(
+                Q(rank__gte=0.1) |
+                Q(similarity__gt=0.1)
+                ).order_by("-rank", "-similarity")
         return render(
             request,
             'blog/post/search.html',
@@ -84,6 +85,7 @@ class PostListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['tag'] = self.tag
+
         return context
 
 
