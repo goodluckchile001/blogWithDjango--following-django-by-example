@@ -1,1 +1,0 @@
-gunicorn Helloworld.wsgi:application

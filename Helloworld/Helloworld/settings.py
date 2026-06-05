@@ -100,7 +100,7 @@ DATABASES = {
         'OPTIONS': {
             'sslmode': 'require',
             'target_session_attrs': 'read-write', 
-        },
+        },                                                                                                                                                                                                                  
     }
 }
 
@@ -139,3 +139,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+#  2. Add this line if you have a local custom static directory
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'), 
+]
+
+# 3. CRUCIAL FIX: This tells Django exactly where to save gathered files on Render
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# 4. WhiteNoise storage layout setup
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
